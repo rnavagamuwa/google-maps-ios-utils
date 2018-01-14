@@ -23,6 +23,7 @@
 
 #import "Heatmap/GMUHeatmapTileLayer.h"
 #import "Heatmap/GMUWeightedLatLng.h"
+#import "DevApp-Swift.h"
 
 static const double kCameraLatitude = 50.067959;
 static const double kCameraLongitude = 19.91266;
@@ -31,46 +32,45 @@ static const double kCameraLongitude = 19.91266;
 @end
 
 @implementation HeatmapViewController {
-  GMSMapView *_mapView;
-  GMUHeatmapTileLayer *_heatmap;
-    
+    GMSMapView *_mapView;
+    GMUWeightBasedHeatmapTileLayer *weightHeatmap;
 }
 
 - (void)loadView {
-  GMSCameraPosition *camera =
-      [GMSCameraPosition cameraWithLatitude:kCameraLatitude longitude:kCameraLongitude zoom:14];
-  _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-  self.view = _mapView;
+    GMSCameraPosition *camera =
+    [GMSCameraPosition cameraWithLatitude:kCameraLatitude longitude:kCameraLongitude zoom:14];
+    _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    self.view = _mapView;
 }
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
+    [super viewDidLoad];
 
-  _heatmap = [[GMUHeatmapTileLayer alloc] init];
-  // Generate and add random items to the heatmap.
-  [self generateHeatmapItems];
-  _heatmap.map = _mapView;
-  [_heatmap setRadius:100];
-
-  UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithTitle:@"Remove"
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:@selector(removeHeatmap)];
-  self.navigationItem.rightBarButtonItems = @[ removeButton ];
+    weightHeatmap = [[GMUWeightBasedHeatmapTileLayer alloc] initWithWeightedData: [self generateHeatmapItems]];
+    weightHeatmap.map = _mapView;
+    [weightHeatmap setRadiusWithRadius:200];
+    [weightHeatmap setOpacityWithOpacity:0.7];
+    [weightHeatmap setMaxIntensityWithMaxIntensity:100.0];
+    
+    UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithTitle:@"Remove"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(removeHeatmap)];
+    self.navigationItem.rightBarButtonItems = @[ removeButton ];
 }
 
 #pragma mark GMSMapViewDelegate
 
 - (void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
-  NSLog(@"Tapped at location: (%lf, %lf)", coordinate.latitude, coordinate.longitude);
+    NSLog(@"Tapped at location: (%lf, %lf)", coordinate.latitude, coordinate.longitude);
 }
 
 #pragma mark Private
 
-- (void)generateHeatmapItems {
-  NSMutableArray<GMUWeightedLatLng *> *items = [NSMutableArray arrayWithCapacity:38];
+- (NSMutableArray<GMUWeightedLatLng *> *)generateHeatmapItems {
+    NSMutableArray<GMUWeightedLatLng *> *items = [NSMutableArray arrayWithCapacity:1];
     
-    items[0] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(49.986111, 20.061667) intensity:1.0];
+    items[0] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(49.986111, 20.061667) intensity:99.0];
     items[1] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(50.193139, 20.288717) intensity:1.0];
     items[2] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(49.740278, 19.588611) intensity:1.0];
     items[3] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(50.061389, 19.938333) intensity:1.0];
@@ -108,18 +108,12 @@ static const double kCameraLongitude = 19.91266;
     items[35] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(49.883333, 19.5) intensity:1.0];
     items[36] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(50.054217, 19.943289) intensity:41.0];
     items[37] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(50.133333, 19.4) intensity:1.0];
-
-  _heatmap.weightedData = items;
-}
-
-// Returns a random value between -1.0 and 1.0.
-- (double)randomScale {
-  return (double)arc4random() / UINT32_MAX * 2.0 - 1.0;
+    return items;
 }
 
 - (void)removeHeatmap {
-  _heatmap.map = nil;
-  _heatmap = nil;
+    weightHeatmap.map = nil;
+    weightHeatmap = nil;
 }
 
 @end
