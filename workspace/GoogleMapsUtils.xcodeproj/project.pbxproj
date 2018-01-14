@@ -264,6 +264,7 @@
 		50EB71F39B4F31FF9127AD8B /* libPods-UnitTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UnitTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E708BD83DBC2004DAEB2D44 /* Pods-UnitTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTest/Pods-UnitTest.debug.xcconfig"; sourceTree = "<group>"; };
 		662F6FAE156096701716AEEC /* libPods-DevApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DevApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84F5801E200BAE0E00A9D37E /* GMUHeatmaps.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMUHeatmaps.h; sourceTree = "<group>"; };
 		84F71E5F2004309C008B99BD /* DevApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DevApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		84F71E602004309C008B99BD /* GMUWeightBasedHeatmapTileLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMUWeightBasedHeatmapTileLayer.swift; sourceTree = "<group>"; };
 		B4F945311F02180900FBF534 /* GMUHeatmapTileLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUHeatmapTileLayer.h; sourceTree = "<group>"; };
@@ -712,6 +713,7 @@
 				B4F945361F02180900FBF534 /* GMUWeightedLatLng.m */,
 				84F71E602004309C008B99BD /* GMUWeightBasedHeatmapTileLayer.swift */,
 				84F71E5F2004309C008B99BD /* DevApp-Bridging-Header.h */,
+				84F5801E200BAE0E00A9D37E /* GMUHeatmaps.h */,
 			);
 			name = Heatmap;
 			path = ../src/Heatmap;
