@@ -68,7 +68,7 @@ static const double kCameraLongitude = 19.91266;
 #pragma mark Private
 
 - (NSMutableArray<GMUWeightedLatLng *> *)generateHeatmapItems {
-    NSMutableArray<GMUWeightedLatLng *> *items = [NSMutableArray arrayWithCapacity:1];
+    NSMutableArray<GMUWeightedLatLng *> *items = [NSMutableArray arrayWithCapacity:38];
     
     items[0] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(49.986111, 20.061667) intensity:99.0];
     items[1] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(50.193139, 20.288717) intensity:1.0];
