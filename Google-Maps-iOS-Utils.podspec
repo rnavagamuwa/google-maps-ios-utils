@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Heatmap' do |sp|
-    sp.source_files = 'src/Heatmap/**/*.{h,m}'
+    sp.source_files = 'src/Heatmap/**/*.{h,m,swift}'
     sp.dependency 'Google-Maps-iOS-Utils/QuadTree'
   end
 end
