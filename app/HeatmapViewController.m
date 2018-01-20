@@ -21,9 +21,8 @@
 
 #import <GoogleMaps/GoogleMaps.h>
 
-#import "Heatmap/GMUHeatmapTileLayer.h"
+#import "GMUWeightHeatmapTileLayer.h"
 #import "Heatmap/GMUWeightedLatLng.h"
-#import "DevApp-Swift.h"
 
 static const double kCameraLatitude = 50.067959;
 static const double kCameraLongitude = 19.91266;
@@ -33,12 +32,12 @@ static const double kCameraLongitude = 19.91266;
 
 @implementation HeatmapViewController {
     GMSMapView *_mapView;
-    GMUWeightBasedHeatmapTileLayer *weightHeatmap;
+    GMUWeightHeatmapTileLayer *weightHeatmap;
 }
 
 - (void)loadView {
     GMSCameraPosition *camera =
-    [GMSCameraPosition cameraWithLatitude:kCameraLatitude longitude:kCameraLongitude zoom:14];
+    [GMSCameraPosition cameraWithLatitude:kCameraLatitude longitude:kCameraLongitude zoom:16];
     _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     self.view = _mapView;
 }
@@ -46,12 +45,12 @@ static const double kCameraLongitude = 19.91266;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    weightHeatmap = [[GMUWeightBasedHeatmapTileLayer alloc] initWithWeightedData: [self generateHeatmapItems]];
+    weightHeatmap = [[GMUWeightHeatmapTileLayer alloc] init];
+    weightHeatmap.weightedData = [self generateHeatmapItems];
+    weightHeatmap.staticMaxIntensity = 100.0;
+    weightHeatmap.radius = 100;
     weightHeatmap.map = _mapView;
-    [weightHeatmap setRadiusWithRadius:200];
-    [weightHeatmap setOpacityWithOpacity:0.7];
-    [weightHeatmap setMaxIntensityWithMaxIntensity:100.0];
-    
+
     UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithTitle:@"Remove"
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:self
@@ -68,7 +67,7 @@ static const double kCameraLongitude = 19.91266;
 #pragma mark Private
 
 - (NSMutableArray<GMUWeightedLatLng *> *)generateHeatmapItems {
-    NSMutableArray<GMUWeightedLatLng *> *items = [NSMutableArray arrayWithCapacity:38];
+    NSMutableArray<GMUWeightedLatLng *> *items = [NSMutableArray arrayWithCapacity:1];
     
     items[0] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(49.986111, 20.061667) intensity:99.0];
     items[1] = [[GMUWeightedLatLng alloc] initWithCoordinate:CLLocationCoordinate2DMake(50.193139, 20.288717) intensity:1.0];
